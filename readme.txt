@@ -3,7 +3,7 @@ Overview:
 jalloc is a heap memory allocator written in x86-64 assembly language.  It is 
 intended to be used by little endian machines running linux, and assembled
 and linked using gcc.  It provides the functionality of malloc and free, but
-has different interface.  Regardless of allocation and deallocation patterns,
+has a different interface.  Regardless of allocation and deallocation patterns,
 the speed of each allocation and deallocation is at most O(log n), which is 
 comparible to most popular allocators.  Memory usage is reasonable, as the 
 design uses techniques to reduce internal and external memory fragmentation.
@@ -33,7 +33,8 @@ which is at least the size requested by the user in the call to ja_allocate.
 Directly preceding every block is a 3 byte header, containing the capacity and
 three bits called the c-bit, the s-bit, and the p-bit, which hold additional
 information.  Sometimes, following the block is unused padding, which is 
-followed by a footer that is a mirror of the header.
+followed by a footer that is a mirror of the header.  The block, along with its
+header and footer, is called a chunk.
 
 The chunks are treated differently by the allocator depending on the 
 size class of the chunks.  Each chunk is considered either small, medium, or
